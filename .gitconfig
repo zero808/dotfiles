@@ -1,0 +1,10 @@
+[user]
+    name = 
+    email = 
+[core]
+    editor = vim
+    excludesfile = /home/user/.gitignore_global
+[github]
+    user = zero808
+[diff]
+    tool = vimdiff
