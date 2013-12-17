@@ -275,7 +275,9 @@ root.buttons(awful.util.table.join(
 globalkeys = awful.util.table.join(
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.util.spawn_with_shell(terminal) end)
+    awful.key({ modkey,           }, "Return", function () awful.util.spawn_with_shell(terminal) end),
+    -- Prompt
+    awful.key({ modkey },            "r",     function () mypromptbox[mouse.screen]:run() end)
 )
 
 clientkeys = awful.util.table.join(
