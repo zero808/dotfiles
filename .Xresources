@@ -1,0 +1,51 @@
+!Xft.dpi: 96
+!Xft.antialias: true
+!Xft.hinting: true
+!Xft.rgba: rgb
+!Xft.autohint: false
+!Xft.hintstyle: hintslight
+!Xft.lcdfilter: lcddefault
+
+! terminal colors ------------------------------ 
+
+! Jellybeans Terminal Colours
+
+! vim: ft=xdefaults
+*background: #151515
+*foreground: #888888
+! black
+*color0: #1C1C1C
+*color8: #404040
+! red
+*color1: #B85335
+*color9: #CF6A4C
+! green
+*color2: #799D6A
+*color10: #99AD6A
+! yellow
+*color3: #FFB964
+*color11: #FAD07A
+! blue
+*color4: #667899
+*color12: #8197BF
+! magenta
+*color5: #8787AF
+*color13: #C6B6EE
+! cyan
+*color6: #668799
+*color14: #8FBFDC
+! white
+*color7: #888888
+*color15: #E8E8D3
+
+! urxvt stuff -------------------------------
+
+URxvt.scrollBar: false
+URxvt.cursorBlink: 1
+URxvt.foreground: #e8e8d3
+URxvt.iconFile: /usr/share/icons/Faenza/apps/scalable/terminal.svg
+!URxvt.font: xft:dina\ Regular:size=12:antialias=true
+!Rxvt.font: -windows-dina-medium-r-normal--12-90-96-96-c-70-iso8859-1
+URxvt.fon: -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso8859-1
+URxvt.perl-ext-common: default,clipboard,url-select,keyboard-select
+
