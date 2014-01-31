@@ -12,18 +12,27 @@ endif
 
 "------ Console UI & Text display ------"
 
-set encoding=utf-8
+if has("multi_byte")
+  if &termencoding == ""
+    let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8
+  "setglobal bomb
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
+
 if has('gui_running')
     " :set guifont=Inconsolata\ Medium\ 12
     :set guifont=Terminus\ Regular\ 12
-    :set guioptions-=m  "remove menu bar  might as well run vim...
+    " :set guioptions-=m  "remove menu bar  might as well run vim...
     :set guioptions-=T  "remove toolbar
     :set guioptions-=r  "remove right-hand scroll bar
     :set guioptions-=R  "remove right-hand scroll bar
 endif
 colorscheme jellybeans
 syntax on
-filetype plugin indent on       " load filetype plugins and indent settings
+"filetype plugin indent on       " load filetype plugins and indent settings
 set list                        " we do that to show tabs
 set listchars=tab:>-,trail:-    " show tabs and trailing
 set number                      " yay line numbers
@@ -56,10 +65,10 @@ set preserveindent              " save as much indent structure as possible
 " backups
 set backup
 if exists("&backupdir")
-    set backupdir=~/.vim/backups/
+    set backupdir=~/.vim/backups//
 endif
 if exists("&directory")
-    set directory=~/.vim/swaps/
+    set directory=~/.vim/swaps//
 endif
 au BufWritePre * let &bex = '-' . strftime("%Y%m%d-%H%M%S") . '.vimbackup'
 
@@ -73,89 +82,91 @@ set tags+=~/.vim/tags,tags
 
 "First of all download vundle if it isn't available, cba to download it manually
 let vundleAvail=1
-let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+let vundle_readme=expand('~/.vim/bundle/neobundle.vim/README.md')
 if !filereadable(vundle_readme)
-    echo "Installing Vundle.."
+    echo "Installing NeoBundle.."
     echo ""
     silent !mkdir -p ~/.vim/bundle
-    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    "#silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
     let vundleAvail=0
 endif
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+set rtp+=~/.vim/bundle/neobundle.vim/
+call neobundle#rc('~/.vim/bundle/')
 
 
 " Repos on github
 " addons manager
-Bundle 'gmarik/vundle'
+"Bundle 'gmarik/vundle'
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'Shougo/neosnippet.vim'
+NeoBundle 'Shougo/neosnippet-snippets'
 "Search github
-Bundle 'gmarik/github-search.vim'
+"NeoBundle 'gmarik/github-search.vim'
 "Ricer tier status line that is actually useful
-Bundle 'bling/vim-airline'
-Bundle 'bling/vim-bufferline'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'bling/vim-bufferline'
 "makes moving around the file much easier
-Bundle 'Lokaltog/vim-easymotion'
+NeoBundle 'Lokaltog/vim-easymotion'
 "comment out lines
-Bundle 'tpope/vim-commentary'
+"NeoBundle 'tpope/vim-commentary'
 "Surround.vim is all about "surroundings": parentheses, brackets, quotes, XML
 "tags, and more. The plugin provides mappings to easily delete, change and add
 "such surroundings in pairs.
-Bundle 'tpope/vim-surround'
+NeoBundle 'tpope/vim-surround'
 "Allows the use of the operator . to plugin commands
-Bundle 'tpope/vim-repeat'
+NeoBundle 'tpope/vim-repeat'
 "Git wrapper
-Bundle 'tpope/vim-fugitive'
+NeoBundle 'tpope/vim-fugitive'
 " grep replacement
-Bundle 'mileszs/ack.vim'
+NeoBundle 'mileszs/ack.vim'
 "might actually try the ack replacement! install: silversearcher-ag
-"Bundle 'rking/ag.vim'
+"NeoBundle 'rking/ag.vim'
 " Syntax checker
-Bundle 'scrooloose/syntastic'
+NeoBundle 'scrooloose/syntastic'
 " Displays the filesystem
-Bundle 'scrooloose/nerdtree'
+NeoBundle 'scrooloose/nerdtree'
 " Shows relative numbers instead of the absolute number
-Bundle 'myusuf3/numbers.vim'
+NeoBundle 'myusuf3/numbers.vim'
 " Inserts a closing ) } ' "
-Bundle 'Townk/vim-autoclose'
+NeoBundle 'Townk/vim-autoclose'
 " Headlights adds a menu to Vim, revealing your bundles (aka. plugins) and the
 " features they provide.
-Bundle 'mbadran/headlights'
+NeoBundle 'mbadran/headlights'
 " Paste code to Gist
-Bundle 'mattn/gist-vim'
+"NeoBundle 'mattn/gist-vim'
 "This Vim plugin will pull C++ ptototypes into the implementation file
-Bundle 'derekwyatt/vim-protodef'
+NeoBundle 'derekwyatt/vim-protodef'
 "This Vim plugin will help switching between companion files (e.g. .h and
 ".cpp files) "
-Bundle 'derekwyatt/vim-fswitch'
+NeoBundle 'derekwyatt/vim-fswitch'
 " Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
-Bundle 'kien/ctrlp.vim'
+"NeoBundle 'kien/ctrlp.vim'
 " Lisp plugins
-" Bundle 'kovisoft/slimv'
-Bundle 'kien/rainbow_parentheses.vim'
-" Bundle 'slimv.vim'
-Bundle 'jpalardy/vim-slime'
+" NeoBundle 'kovisoft/slimv'
+NeoBundle 'kien/rainbow_parentheses.vim'
+" NeoBundle 'slimv.vim'
+NeoBundle 'jpalardy/vim-slime'
 "source code browser
-Bundle 'majutsushi/tagbar'
+NeoBundle 'majutsushi/tagbar'
 
 "Auto-completion
-"Bundle 'Valloric/YouCompleteMe'
-
+"NeoBundle 'Valloric/YouCompleteMe'
+"test these
 "remember to switch to branch meu !!
-Bundle 'zero808/c.vim'
+"NeoBundle 'zero808/c.vim'
 "doxygen support
-Bundle 'doxygen-support.vim'
+NeoBundle 'doxygen-support.vim'
 "Latex support
-Bundle 'latex-support.vim'
+NeoBundle 'latex-support.vim'
 
-"non github repos
-"other latex plugins
-"Bundle 'git://vim-latex.git.sourceforge.net/gitroot/vim-latex/vim-latex'
-"Bundle 'git://git.code.sf.net/p/atp-vim/code'
+
 
 if vundleAvail == 0
     echo "Installing Bundles, please ignore key map error messages"
     echo ""
-    :BundleInstall
+    :NeoBundleInstall
 endif
 
 " utility functions
@@ -168,13 +179,80 @@ nmap <silent> <F4> :call CreateTags()<CR>
 
 "--------  PLUGINS CONFIG -------------------------------------
 "Syntasitc
-let g:syntastic_cpp_compiler_options = ' -std=c++11'
+" For C++
+let g:syntastic_cpp_compiler = 'g++'
+let g:syntastic_cpp_compiler_options = '-std=c++11'
+let g:syntastic_cpp_check_header = 1
+let g:syntastic_cpp_no_include_search = 1
+"For C
+let g:syntastic_c_compiler = 'gcc'
+let g:syntastic_c_compiler_options = '-std=c99' "default for gcc is gnu90
+let g:syntastic_c_no_include_search = 1
+let g:syntastic_c_check_header = 1
+
+"YouCompleteMe
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+
+"Neocomplete
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplete.
+let g:neocomplete#enable_at_startup = 1
+" Use smartcase.
+let g:neocomplete#enable_smart_case = 1
+" Set minimum syntax keyword length.
+let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+" Define keyword.
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+" Plugin key-mappings.
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+" Enable omni completion.
+"autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+" Enable heavy omni completion.
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
+endif
+"let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+"neosnippet
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)"
+\: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
 "slime.vim
 let g:slime_target = "tmux"
 let g:slime_no_mappings = 1
 xmap <leader>s <Plug>SlimeRegionSend
 nmap <leader>s <Plug>SlimeMotionSend
+"this way we can have repl on the left and vim on the right
+let g:slime_default_config = {"socket_name": "default", "target_pane": "1.0"}
 "nmap <leader>ss <Plug>SlimeLineSend
 
 "airline
@@ -191,24 +269,28 @@ let g:airline_right_alt_sep = '⮃'
 let g:airline_branch_prefix = '⭠'
 let g:airline_readonly_symbol = '⭤'
 let g:airline_linecolumn_prefix = '⭡'
+
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-" if executable('ag')
+if executable('ag')
 " " Use Ag over Grep
 "   set grepprg=ag\ --nogroup\ --nocolor
+  let g:ackprg = "ag --nocolor --nogroup --column"
 "   " Use ag in CtrlP for listing files. Lightning fast and respects
 "   .gitignore
 "     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-
 " ag is fast enough that CtrlP doesn't need to cache
 "   let g:ctrlp_use_caching = 0
-" elseif executable('ack')
+elseif executable('ack-grep')
+" set grepprg=ack-grep
+  let g:ackprg = "ack-grep --nocolor --nogroup --column"
+elseif executable('ack')
 " set grepprg=ack
-"   endif "
+  let g:ackprg = "ack --nocolor --nogroup --column"
+endif
 
 "Latex-suite
 "let g:tex_flavor='latex'
 "--------------------------------------------------------------
 
-"------ END VIM-500 ------"
-
+filetype plugin indent on       " load filetype plugins and indent settings
 endif " version >= 500

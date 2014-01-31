@@ -8,6 +8,7 @@ autoload -U colors && colors
 PROMPT="%{$fg[green]%}%n%{$reset_color%}@%{$fg[white]%}%m %{$reset_color%}%1~ %{$fg[white]%}- %T %{$reset_color%}%# "
 RPROMPT="[%{$fg[yellow]%}%?%{$reset_color%}]"
 # export CVS_RSH=ssh
+# export CVSROOT=:ext:ist164752@sigma.ist.utl.pt:/afs/ist.utl.pt/groups/leic-co/co13/cvs/011
 alias beepboop='echo "main(i){for(i=0;;i++)putchar(((i*(i>>8|i>>9)&46&i>>8))^(i&i>>13|i>>6));}" | gcc -x c - && ./a.out | aplay -f U16 -r 44100'
 alias off='sudo poweroff'
 alias ls='ls --color=always'
@@ -19,21 +20,51 @@ alias tmi='tmuxinator work'
 alias tmo='tmuxinator open work'
 alias rmv='shred -uz'
 alias rst='ristretto'
-alias mp='mplayer -vo x11'
+alias mp='mpv --vo=x11'
 alias grep='grep --colour=always'
 alias ack= 'ack-grep'
-# apt
+alias cgc= 'colorgcc'
+alias cg+= 'colorg++'
+# apt (package manager)
 alias upd='sudo apt-get update'
 alias dupg='sudo apt-get dist-upgrade'
 alias upg='sudo apt-get upgrade'
 alias inst='sudo apt-get install'
 alias rem='sudo apt-get autoremove --purge'
 alias aptclean='sudo apt-get autoclean'
-alias srcpkg='apt-cache search'
-alias srcinst='dpkg --get-selections | grep'
+#alias srcpkg='apt-cache search'
+#alias srcinst='dpkg --get-selections | grep'
+# git
+alias gst='git status '
+alias ga='git add '
+alias gb='git branch '
+alias gc='git commit'
+alias gd='git diff'
+alias gco='git checkout '
+# alias gk='gitk --all&'
+# alias gx='gitx --all'
+#typo that might happen...
+alias got='git '
+
+# para nao ter que estar sempre a escrever a mesma merda
+function gmeu() {
+    git clone https://github.com/zero808/"$1"
+}
 
 function trash() {
     mv -vf "$1" "$HOME/.trash/"
+}
+
+srcpkg() {
+    #for debian
+    apt-cache search $1 | sort
+    # for arch
+    # pacman -Ss $1
+}
+
+srcinst() {
+    #for debian
+    dpkg --get-selections | grep $1 | sort
 }
 
 unpack () {
