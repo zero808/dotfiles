@@ -11,23 +11,24 @@
 
 set $mod Mod1
 
+#THE XFCE4 PART
+# make sure xfce notifications display properly
+for_window [class="Xfce4-notifyd"] floating enable;border none; focus mode_toggle
+# remap the exit command to properly exit Xfce
+bindsym $mod+Shift+e exec xfce4-session-logout
+# xfce settings
+bindsym $mod+Shift+s exec xfce4-settings-manager
 exec --no-startup-id feh --bg-scale /home/duarte/Pictures/wallpaper-2404915.jpg
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-#font pango:Terminus 12
+font pango:Terminus 12
 # The font above is very space-efficient, that is, it looks good, sharp and
 # clear in small sizes. However, if you need a lot of unicode glyphs or
 # right-to-left text rendering, you should instead use pango for rendering and
 # chose a FreeType font, such as:
-#font pango:DejaVu Sans Mono 10
-
-# keybindings for programs
-bindsym Mod4+w exec --no-startup-id iceweasel
-bindsym Mod4+z exec --no-startup-id zathura
-bindsym Mod4+t exec --no-startup-id thunar
-bindsym Mod4+e exec --no-startup-id gvim
+# font pango:DejaVu Sans Mono 10
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -126,7 +127,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -156,7 +157,6 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-         status_command i3status
-         position top
-}
+# bar {
+#         status_command i3status
+# }

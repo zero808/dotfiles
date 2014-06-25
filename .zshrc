@@ -12,10 +12,11 @@ RPROMPT="[%{$fg[yellow]%}%?%{$reset_color%}]"
 alias beepboop='echo "main(i){for(i=0;;i++)putchar(((i*(i>>8|i>>9)&46&i>>8))^(i&i>>13|i>>6));}" | gcc -x c - && ./a.out | aplay -f U16 -r 44100'
 alias off='sudo poweroff'
 alias ls='ls --color=always'
+alias ll='ls -lh --color=always'
 alias vi=vim
 alias vimnoplg='vim -u NONE -N'
 alias scrshot='xfce4-screenshooter'
-alias tmux='tmux -2 -f ~/.tmux/conf new -s work'
+alias tmu='tmux -2 -f ~/.tmux/conf new -s work'
 alias tmi='tmuxinator work'
 alias tmo='tmuxinator open work'
 alias rmv='shred -uz'
@@ -23,8 +24,8 @@ alias rst='ristretto'
 alias mp='mpv --vo=x11'
 alias grep='grep --colour=always'
 alias ack= 'ack-grep'
-alias cgc= 'colorgcc'
-alias cg+= 'colorg++'
+alias gcc='gcc -fdiagnostics-color=always'
+alias g++='g++ -fdiagnostics-color=always'
 # apt (package manager)
 alias upd='sudo apt-get update'
 alias dupg='sudo apt-get dist-upgrade'
@@ -45,7 +46,6 @@ alias gco='git checkout '
 # alias gx='gitx --all'
 #typo that might happen...
 alias got='git '
-
 # para nao ter que estar sempre a escrever a mesma merda
 function gmeu() {
     git clone https://github.com/zero808/"$1"
@@ -87,4 +87,11 @@ unpack () {
   else
       echo "'$1' is not a valid file!"
   fi
+}
+
+funtion updt() {
+    sudo apt-get update
+    sudo apt-get dist-upgrade -y
+    sudo apt-get autoremove --purge -y
+    sudo apt-get autoclean
 }

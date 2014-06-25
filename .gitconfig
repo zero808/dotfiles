@@ -1,10 +1,19 @@
 [user]
     name = 
-    email = 
+    email = @gmail.com
 [core]
     editor = vim
-    excludesfile = /home/user/.gitignore_global
+    excludesfile = ~/.gitignore_global
 [github]
-    user = zero808
+    user = 
 [diff]
     tool = vimdiff
+[alias]
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+
+[push]
+  default = simple
