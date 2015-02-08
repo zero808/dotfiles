@@ -24,13 +24,13 @@ endif
 
 if has('gui_running')
     " :set guifont=Inconsolata\ Medium\ 12
-    :set guifont=Terminus\ Regular\ 12
+    :set guifont=Inconsolata-dz\ for\ Powerline\ Medium\ 10
+    " :set guifont=Terminus\ Regular\ 12
     " :set guioptions-=m  "remove menu bar  might as well run vim...
     :set guioptions-=T  "remove toolbar
     :set guioptions-=r  "remove right-hand scroll bar
     :set guioptions-=R  "remove right-hand scroll bar
 endif
-colorscheme jellybeans
 syntax on
 "filetype plugin indent on       " load filetype plugins and indent settings
 set list                        " we do that to show tabs
@@ -95,7 +95,8 @@ if !filereadable(vundle_readme)
     let vundleAvail=0
 endif
 set rtp+=~/.vim/bundle/neobundle.vim/
-call neobundle#rc('~/.vim/bundle/')
+" call neobundle#rc('~/.vim/bundle/')
+call neobundle#begin(expand('~/.vim/bundle/'))
 
 
 " Repos on github
@@ -128,7 +129,7 @@ NeoBundle 'mileszs/ack.vim'
 " Syntax checker
 NeoBundle 'scrooloose/syntastic'
 " Displays the filesystem
-NeoBundle 'scrooloose/nerdtree'
+" NeoBundle 'scrooloose/nerdtree'
 " Shows relative numbers instead of the absolute number
 NeoBundle 'myusuf3/numbers.vim'
 " Inserts a closing ) } ' "
@@ -145,29 +146,29 @@ NeoBundle 'derekwyatt/vim-protodef'
 ".cpp files) "
 NeoBundle 'derekwyatt/vim-fswitch'
 " Full path fuzzy file, buffer, mru, tag, ... finder for Vim.
-"NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'kien/ctrlp.vim'
 " Lisp plugins
 " NeoBundle 'kovisoft/slimv'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'wlangstroth/vim-racket'
-" NeoBundle 'slimv.vim'
 NeoBundle 'jpalardy/vim-slime'
-"try
-"NeoBundle 'vim-scripts/Nekthuth'
 "source code browser
 NeoBundle 'majutsushi/tagbar'
 "para prolog
 "Neobundle 'adimit/prolog.vim'
 
+"syntax highlighting for i3wm config file
+NeoBundle 'PotatoesMaster/i3-vim-syntax'
+"color scheme
+NeoBundle 'nanotech/jellybeans.vim'
 "Auto-completion
 "NeoBundle 'Valloric/YouCompleteMe'
 "test these
-"remember to switch to branch meu !!
-"NeoBundle 'zero808/c.vim'
 "doxygen support
-NeoBundle 'doxygen-support.vim'
+" NeoBundle 'doxygen-support.vim'
 "Latex support
 NeoBundle 'latex-support.vim'
+call neobundle#end()
 
 
 if vundleAvail == 0
@@ -177,28 +178,29 @@ if vundleAvail == 0
 endif
 
 " utility functions
-function CreateTags()
-    let curNodePath = g:NERDTreeFileNode.GetSelected().path.str()
-    exec ':!ctags -R --languages=c -f ' . curNodePath . '/tags ' . curNodePath
-endfunction
-nmap <silent> <F4> :call CreateTags()<CR>
+" function CreateTags()
+"     let curNodePath = g:NERDTreeFileNode.GetSelected().path.str()
+"     exec ':!ctags -R --languages=c -f ' . curNodePath . '/tags ' . curNodePath
+" endfunction
+" nmap <silent> <F4> :call CreateTags()<CR>
 
+colorscheme jellybeans
 
 "--------  PLUGINS CONFIG -------------------------------------
 "Syntasitc
 " For C++
 let g:syntastic_cpp_compiler = 'g++'
-"let g:syntastic_cpp_compiler_options = '-std=c++11'
-let g:syntastic_cpp_compiler_options = '-std=gnu++03'
+let g:syntastic_cpp_compiler_options = '-std=c++11'
+" let g:syntastic_cpp_compiler_options = '-std=gnu++03'
 let g:syntastic_cpp_check_header = 1
 let g:syntastic_cpp_no_include_search = 1
 "For C
 let g:syntastic_c_compiler = 'gcc'
-let g:syntastic_c_compiler_options = '-std=c99' "default for gcc is gnu90
+let g:syntastic_c_compiler_options = '-std=gnu99' "default for gcc is gnu90
 let g:syntastic_c_no_include_search = 1
 let g:syntastic_c_check_header = 1
 "for racket
-let g:syntastic_racket_code_ayatollah_script = '~/.vim/code-ayatollah.rkt'
+let g:syntastic_racket_code_ayatollah_script = '/home/zero/.vim/bundle/syntastic/syntax_checkers/racket/code_ayatollah.vim'
 
 "YouCompleteMe
 "let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
@@ -267,10 +269,13 @@ let g:slime_no_mappings = 1
 xmap <leader>s <Plug>SlimeRegionSend
 nmap <leader>s <Plug>SlimeMotionSend
 "this way we can have repl on the left and vim on the right
-let g:slime_default_config = {"socket_name": "default", "target_pane": "1.0"}
+let g:slime_default_config = {"socket_name": "default", "target_pane": "0.0"}
 "nmap <leader>ss <Plug>SlimeLineSend
 
 "airline
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 set laststatus=2
 let g:airline#extensions#bufferline#enabled = 1
 "let g:airline#extensions#tabline#enabled = 1
@@ -281,12 +286,17 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline_detect_modified=1
 let g:airline_theme='jellybeans'
 let g:airline_powerline_fonts=0
-let g:airline_left_sep = '⮀'
-let g:airline_left_alt_sep = '⮁'
-let g:airline_right_sep = '⮂'
-let g:airline_right_alt_sep = '⮃'
-let g:airline_branch_prefix = '⭠'
-let g:airline_readonly_symbol = '⭤'
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '◀'
+let g:airline_left_alt_sep = ''
+let g:airline_right_alt_sep = ''
+" let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
 
 "Raibow parentheses
 let g:rbpt_colorpairs = [
@@ -299,7 +309,6 @@ let g:rbpt_colorpairs = [
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['brown',       'firebrick3'],
     \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['Darkblue',    'firebrick3'],
     \ ['darkgreen',   'RoyalBlue3'],
